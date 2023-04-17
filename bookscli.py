@@ -43,8 +43,8 @@ def add(title: str = typer.Option(..., prompt=True),
 
 
 @app.command(short_help='remove a book from your book list by title')
-def remove(book: str = typer.Option(..., prompt=True, confirmation_prompt=True)):
-    console.print(f"Removing {book}")
+def remove(title: str = typer.Option(..., prompt=True, confirmation_prompt=True)):
+    console.print(f"Removing {title}")
 
 
 @app.command(short_help='view the list of books you want to read')
