@@ -84,6 +84,9 @@ def my_books():
 def botd():
     console.print(f"Here is the book of the day:")
 
+def show():
+    pass
+
 
 if __name__ == '__main__':
     app()
