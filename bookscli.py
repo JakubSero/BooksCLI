@@ -3,8 +3,8 @@ import pyfiglet
 from rich.console import Console
 from rich.table import Table
 from model import Book
-
-# from rich import print
+from database import add_book, delete_book, get_all_books
+import time
 
 app = typer.Typer()
 console = Console()
@@ -37,14 +37,21 @@ def home():
 def add(title: str = typer.Option(..., prompt=True),
         author: str = typer.Option(..., prompt=True),
         year_published: str = typer.Option(..., prompt=True)):
-    book = Book(title, author, year_published, date_added=None)
-    console.print(book)
+    print('\n' * 150)
+    book = Book(title, author, year_published, date_added=None, position=None)
+    add_book(book)
     console.print(f"Adding {title} by {author}, published in {year_published}.")
+    time.sleep(2)
+    show()
 
 
 @app.command(short_help='remove a book from your book list by title')
 def remove(title: str = typer.Option(..., prompt=True, confirmation_prompt=True)):
+    print('\n' * 150)
+    delete_book(title)
     console.print(f"Removing {title}")
+    time.sleep(2)
+    show()
 
 
 @app.command(short_help='view the list of books you want to read')
@@ -78,14 +85,28 @@ def login(name: str = typer.Option(..., prompt=True)):
 @app.command(short_help='opens your read book list')
 def my_books():
     console.print(f"Opening my book list")
+    show()
 
 
 @app.command(short_help='displays the random book of the day with some information')
 def botd():
     console.print(f"Here is the book of the day:")
 
+
 def show():
-    pass
+    books = get_all_books()
+    console.print("[bold magenta]------- My Books -------[/bold magenta]")
+
+    table = Table(show_header=True)
+    table.add_column("#")
+    table.add_column("Title")
+    table.add_column("Author")
+    table.add_column("Year Published")
+    table.add_column("Date Added")
+
+    for idx, book in enumerate(books, start=1):
+        table.add_row(str(idx), book.title, book.author, str(book.year_published), book.date_added)
+    console.print(table)
 
 
 if __name__ == '__main__':
