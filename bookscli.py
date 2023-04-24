@@ -2,6 +2,7 @@ import typer
 import pyfiglet
 from rich.console import Console
 from rich.table import Table
+from rich.progress import track
 from model import Book
 from database import add_book, delete_book, get_all_books
 import time
@@ -41,7 +42,8 @@ def add(title: str = typer.Option(..., prompt=True),
     book = Book(title, author, year_published, date_added=None, position=None)
     add_book(book)
     console.print(f"Adding {title} by {author}, published in {year_published}.")
-    time.sleep(2)
+    for value in track(range(100)):
+        time.sleep(.005)
     show()
 
 
@@ -50,7 +52,7 @@ def remove(title: str = typer.Option(..., prompt=True, confirmation_prompt=True)
     print('\n' * 150)
     delete_book(title)
     console.print(f"Removing {title}")
-    time.sleep(2)
+    time.sleep(1)
     show()
 
 
