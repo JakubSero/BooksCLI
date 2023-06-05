@@ -95,9 +95,6 @@ def popular(genre: str = typer.Option(..., prompt=True)):
     print('\n' * 150)
     console.print(f"Displaying most popular [gold1]{genre}[/gold1] books")
     console.print("----------------------")
-    for value in track(range(100)):
-        time.sleep(.005)
-    console.print("----------------------")
     get_books(genre)
 
 
