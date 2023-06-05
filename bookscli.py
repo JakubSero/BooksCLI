@@ -47,7 +47,7 @@ def add(title: str = typer.Option(..., prompt=True),
     console.print(f"Adding {title} by {author}, published in {year_published}.")
     for value in track(range(100)):
         time.sleep(.005)
-    show()
+    show('Books')
 
 
 @app.command(short_help='remove a book from your book list by title')
